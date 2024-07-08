@@ -1,8 +1,16 @@
+import Chat from '@/components/Chat';
+import Header from '@/components/HomeHeader';
+import React from 'react';
+// import Header from './components/Header';
+// import Chat from './components/Chat';
 
-export function Casa() {
+const App: React.FC = () => {
   return (
-   <>
-    <h1>Home</h1>
-   </>
-  )
-}
+    <div className="flex flex-col h-screen">
+      <Header />
+      <Chat />
+    </div>
+  );
+};
+
+export default App;
