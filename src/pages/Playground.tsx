@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, useNavigate } from 'react-router-dom';
 import Layout from '../components/Layout';
-import API_page from './API';
 import Model_page from './Models';
 import Documentation from './Documentation';
+import API_page from './API';
 
 const Playground: React.FC = () => {
   const navigate = useNavigate();
