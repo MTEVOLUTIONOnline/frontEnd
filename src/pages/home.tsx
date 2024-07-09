@@ -4,7 +4,7 @@ import React from 'react';
 // import Header from './components/Header';
 // import Chat from './components/Chat';
 
-const App: React.FC = () => {
+const Home: React.FC = () => {
   return (
     <div className="flex flex-col h-screen">
       <Header />
@@ -13,4 +13,4 @@ const App: React.FC = () => {
   );
 };
 
-export default App;
+export default Home;
