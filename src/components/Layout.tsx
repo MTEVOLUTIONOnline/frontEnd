@@ -1,6 +1,10 @@
 import React, { ReactNode } from 'react';
-import { PiLockKeyBold } from "react-icons/pi";
+import { PiLockKeyBold} from "react-icons/pi";
+import { IoSettingsOutline } from "react-icons/io5";
 import { Link } from "react-router-dom"
+import { FiBook } from "react-icons/fi";
+
+import { BiCodeBlock } from "react-icons/bi";
 import {
   Bell,
   CircleUser,
@@ -58,8 +62,8 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
               to="#"
               className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary"
             >
-              <Home className="h-4 w-4" />
-              Dashboard
+              <BiCodeBlock className="h-4 w-4"/ >
+              Playground
             </Link>
             <Link
               to="#"
@@ -68,30 +72,24 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
               <PiLockKeyBold className="h-4 w-4"  />
               API keys
               <Badge className="ml-auto flex h-6 w-6 shrink-0 items-center justify-center rounded-full">
-                6
+                7
               </Badge>
             </Link>
             <Link
               to="#"
               className="flex items-center gap-3 rounded-lg bg-muted px-3 py-2 text-primary transition-all hover:text-primary"
             >
-              <Package className="h-4 w-4" />
-              Products{" "}
+              <FiBook className="h-4 w-4" />
+              Documentation{" "}
             </Link>
             <Link
               to="#"
               className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary"
             >
-              <Users className="h-4 w-4" />
-              Customers
+              <IoSettingsOutline  className="h-4 w-4"/>
+              Settings
             </Link>
-            <Link
-              to="#"
-              className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary"
-            >
-              <LineChart className="h-4 w-4" />
-              Analytics
-            </Link>
+          
           </nav>
         </div>
         {/* Inventory
@@ -228,13 +226,11 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
         <div className="flex items-center">
           <h1 className="text-lg font-semibold md:text-2xl">Inventory</h1>
         </div>
-        <div
-          className="flex flex-1 items-center justify-center rounded-lg border border-dashed shadow-sm" x-chunk="dashboard-02-chunk-1"
-        >
+        {children}
+        {/* <div className="flex flex-1 items-center justify-center rounded-lg border border-dashed shadow-sm" x-chunk="dashboard-02-chunk-1" >
           <div className="flex flex-col items-center gap-1 text-center">
-            {children}
           </div>
-        </div>
+        </div> */}
       </main>
     </div>
   </div>
