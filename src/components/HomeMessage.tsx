@@ -1,16 +1,19 @@
 import React from 'react';
 
 interface MessageProps {
-  message: string;
-  isUser: boolean;
+  text: string;
+  sender: string;
 }
 
-const Message: React.FC<MessageProps> = ({ message, isUser }) => {
+const Message: React.FC<MessageProps> = ({ text, sender }) => {
   return (
-    <div className={`p-4 my-2 rounded-lg ${isUser ? 'bg-blue-500 text-white' : 'bg-gray-200 text-black'}`}>
-      {message}
+   <div className='w-10 flex items-center justify-center text-center'>
+     <div className="p-2 m-2 border rounded shadow">
+      <div className="font-bold">{sender}</div>
+      <div>{text}</div>
     </div>
+   </div>
   );
-};
+}
 
 export default Message;

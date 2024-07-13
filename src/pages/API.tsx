@@ -9,7 +9,6 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-
 import {
   AlertDialog,
   AlertDialogAction,
@@ -21,88 +20,27 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
-
 import { CgTrashEmpty } from "react-icons/cg";
 import { LuPen } from "react-icons/lu";
-
-interface ApiKey {
-  id: number;
-  key: string;
-  name: string; // Adicionando campo de nome
-  createdAt: string;
-  userId: number;
-}
+import { Input } from '@/components/ui/input';
+// import { ApiKey } from '@/types';
+import { handleGenerateKey } from '@/acesse/handleGenerateKey';
+import { deleteApiKey } from '@/acesse/deleteApiKey';
+import { fetchApiKeys } from '@/acesse/fetchApiKeys';
+import { ApiKey } from '@/types';
+// import { fetchApiKeys } from '@/requests/fetchApiKeys';
+// import { handleGenerateKey } from '@/requests/handleGenerateKey';
+// import { deleteApiKey } from '@/requests/deleteApiKey';
 
 function API_page() {
   const [secretKey, setSecretKey] = useState<string>('');
   const [apiKeys, setApiKeys] = useState<ApiKey[]>([]);
   const [error, setError] = useState<string>('');
-  const [apiKeyName, setApiKeyName] = useState<string>(''); // Estado para o nome da API Key
-  const [dialogOpen, setDialogOpen] = useState<boolean>(false); // Estado para o diálogo
-
-  const handleGenerateKey = async () => {
-    const tokenJwt = localStorage.getItem('token');
-    if (!tokenJwt) {
-      setError('Token de usuário não encontrado!');
-      console.error('Token de usuário não encontrado!');
-      return;
-    }
-
-    try {
-      const response = await fetch('http://localhost:3000/generate-api-key', {
-        method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${tokenJwt}`,
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ name: apiKeyName }) // Enviando o nome da API Key
-      });
-
-      if (!response.ok) {
-        alert("Erro ao gerar chave de API");
-        throw new Error(`HTTP error! Status: ${response.status}`);
-      }
-
-      const data = await response.json();
-      setSecretKey(data.apiKey);
-      setApiKeys(prevKeys => [...prevKeys, { id: Date.now(), key: data.apiKey, name: apiKeyName, createdAt: new Date().toISOString(), userId: 0 }]); // Adiciona nova chave à lista
-      setError('');
-      setDialogOpen(false); // Fechar o diálogo após a criação da chave
-    } catch (error: any) {
-      setError(`Erro ao gerar a chave secreta: ${error.message}`);
-      console.error('Erro ao gerar a chave secreta:', error);
-    }
-  };
-
-  const fetchApiKeys = async () => {
-    const tokenJwt = localStorage.getItem('token');
-    if (!tokenJwt) {
-      setError('Token de usuário não encontrado!');
-      console.error('Token de usuário não encontrado!');
-      return;
-    }
-
-    try {
-      const response = await fetch('http://localhost:3000/api-keys', {
-        headers: {
-          'Authorization': `Bearer ${tokenJwt}`
-        }
-      });
-
-      if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
-      }
-
-      const data: ApiKey[] = await response.json();
-      setApiKeys(data);
-    } catch (error: any) {
-      setError(`Erro ao buscar as chaves de API: ${error.message}`);
-      console.error('Erro ao buscar as chaves de API:', error);
-    }
-  };
+  const [apiKeyName, setApiKeyName] = useState<string>(''); 
+  const [dialogOpen, setDialogOpen] = useState<boolean>(false);
 
   useEffect(() => {
-    fetchApiKeys();
+    fetchApiKeys(setApiKeys, setError);
   }, []);
 
   return (
@@ -118,16 +56,16 @@ function API_page() {
               Por favor, insira um nome para a nova chave API.
             </AlertDialogDescription>
           </AlertDialogHeader>
-          <input
+          <Input
             type="text"
             placeholder="Nome da API Key"
             value={apiKeyName}
             onChange={(e) => setApiKeyName(e.target.value)}
-            className="input-class" // Adicione a classe de estilo apropriada
+            className="input-class"
           />
           <AlertDialogFooter>
             <AlertDialogCancel onClick={() => setDialogOpen(false)}>Cancelar</AlertDialogCancel>
-            <AlertDialogAction onClick={handleGenerateKey}>Criar</AlertDialogAction>
+            <AlertDialogAction onClick={() => handleGenerateKey(apiKeyName, setSecretKey, setApiKeys, setError, setDialogOpen)}>Criar</AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
@@ -150,10 +88,21 @@ function API_page() {
               <TableCell>{new Date(key.createdAt).toLocaleString()}</TableCell>
               <TableCell>
                 <div className='flex gap-5 justify-end'>
-                  <Button>
-                    <LuPen />
-                  </Button>
-                  
+                  <AlertDialog>
+                    <AlertDialogTrigger><Button variant={'outline'}><LuPen /></Button></AlertDialogTrigger>
+                    <AlertDialogContent>
+                      <AlertDialogHeader>
+                        <AlertDialogTitle>deseija editar o nome {key.name} ?</AlertDialogTitle>
+                        <AlertDialogDescription>
+                         <Input placeholder='Novo Nome'/>
+                        </AlertDialogDescription>
+                      </AlertDialogHeader>
+                      <AlertDialogFooter>
+                        <AlertDialogCancel>Cancel</AlertDialogCancel>
+                        <AlertDialogAction>Continue</AlertDialogAction>
+                      </AlertDialogFooter>
+                    </AlertDialogContent>
+                  </AlertDialog>
                   <AlertDialog>
                     <AlertDialogTrigger><Button variant={'destructive'}><CgTrashEmpty /></Button></AlertDialogTrigger>
                     <AlertDialogContent>
@@ -166,7 +115,7 @@ function API_page() {
                       </AlertDialogHeader>
                       <AlertDialogFooter>
                         <AlertDialogCancel>Cancel</AlertDialogCancel>
-                        <AlertDialogAction>Continue</AlertDialogAction>
+                        <AlertDialogAction onClick={() => deleteApiKey(key.id, setError)}>Continue</AlertDialogAction>
                       </AlertDialogFooter>
                     </AlertDialogContent>
                   </AlertDialog>

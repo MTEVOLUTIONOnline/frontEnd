@@ -1,12 +1,14 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 
 const Sidebar: React.FC = () => {
   return (
-    <div className="sidebar w-64 bg-gray-800 text-white flex flex-col fixed top-16 h-[calc(100vh-4rem)]">
-      <Link to="/playground" className="p-4 hover:bg-gray-700">Home</Link>
-      <Link to="/playground/DocumentationPage" className="p-4 hover:bg-gray-700">Documentation</Link>
-      <Link to="/playground/APIpage" className="p-4 hover:bg-gray-700">API</Link>
+    <div className="w-64 bg-gray-200 p-4">
+      <h2 className="font-bold text-lg">Menu</h2>
+      <ul className="mt-4 space-y-2">
+        <li><a href="#" className="block p-2 rounded hover:bg-gray-300">Explorar GPTs</a></li>
+        <li><a href="#" className="block p-2 rounded hover:bg-gray-300">Consultar APIs</a></li>
+        <li><a href="#" className="block p-2 rounded hover:bg-gray-300">Configurações</a></li>
+      </ul>
     </div>
   );
 }

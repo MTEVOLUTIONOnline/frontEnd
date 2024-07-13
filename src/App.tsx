@@ -4,17 +4,21 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Login from './pages/login';
 import Playground from './pages/Playground';
 import Cadastro from './pages/cadastro';
-import Home from './pages/home';
+// import { Setting } from './pages/setting';
+import { Home } from './pages/home';
+import Setting from './pages/setting';
 
 
 const App: React.FC = () => {
   return (
     <Router>
       <Routes>
+        {/* Dashboard */}
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/cadastro" element={<Cadastro />} />
         <Route path="/playground/*" element={<Playground />} />
+        <Route path="/Setting/*" element={<Setting />} />
       </Routes>
     </Router>
   );
