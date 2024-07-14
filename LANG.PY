@@ -1,6 +1,6 @@
 import re
 
-# Dicionário para armazenar variáveis
+# Dicionário para armazenar variáveis minha lang
 variables = {}
 
 # Função para executar o comando MTPRINT
