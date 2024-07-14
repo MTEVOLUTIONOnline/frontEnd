@@ -1,32 +1,78 @@
-import React, { useState } from 'react';
-import Message from './HomeMessage';
+// src/components/Chat.jsx
+import { useState, useEffect } from 'react';
+import { Button } from './ui/button';
 import { Input } from './ui/input';
-// import Message from './Message';
 
-const Chat: React.FC = () => {
-  const [messages, setMessages] = useState([
-    { text: "Olá, como posso ajudar?", sender: "ChatGPT" },
-    { text: "Eu preciso de ajuda com um problema.", sender: "Usuário" }
-  ]);
+type Message = {
+  text: string;
+  sender: 'user' | 'bot';
+};
+
+export function CChat() {
+  const [messages, setMessages] = useState<Message[]>([]);
+  const [input, setInput] = useState('');
+
+  // Carregar mensagens do localStorage quando o componente for montado
+  useEffect(() => {
+    const storedMessages = localStorage.getItem('chatMessages');
+    if (storedMessages) {
+      setMessages(JSON.parse(storedMessages));
+    }
+  }, []);
+
+  // Salvar mensagens no localStorage sempre que o estado messages mudar
+  useEffect(() => {
+    localStorage.setItem('chatMessages', JSON.stringify(messages));
+  }, [messages]);
+
+  const handleSend = () => {
+    if (input.trim()) {
+      setMessages([...messages, { text: input, sender: 'user' }]);
+      setInput('');
+      // Simulate bot response
+      setTimeout(() => {
+        setMessages((prevMessages) => [
+          ...prevMessages,
+          { text: 'This is a response from the bot.', sender: 'bot' },
+        ]);
+      }, 1000);
+    }
+  };
 
   return (
-    <div className="flex-1 p-4 flex flex-col">
-      <h1 className="text-2xl font-bold mb-4">ChatGPT</h1>
-      <div className="flex flex-col space-y-4  flex-1 overflow-auto">
-        {messages.map((msg, index) => (
-          <Message key={index} text={msg.text} sender={msg.sender} />
-        ))}
-      </div>a
-      <div className="mt-4">
-        <Input
-          type="text"
-          placeholder="Digite sua mensagem"
-          className="w-full p-2 border rounded mb-2"
-        />
-      
+    <div>
+
+      <div className="flex flex-col h-screen bg-gray-100 pl-[25%] pr-[25%]">
+      <div className="flex-grow p-6 overflow-auto">
+        <div className="flex flex-col space-y-4">
+          {messages.map((message, index) => (
+            <div
+              key={index}
+              className={`p-4 rounded-lg max-w-xs ${message.sender === 'user' ? 'bg-blue-500 text-white self-end' : 'bg-gray-300 text-black self-start'}`}
+            >
+              {message.text}
+            </div>
+          ))}
+        </div>
       </div>
+      <div className="p-4 bg-white border-gray-300">
+        <div className="flex gap-3">
+          <Input
+            type="text"
+            className="flex-grow p-5 border border-gray-300  focus:outline-none focus:ring focus:border-blue-500"
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+            onKeyDown={(e) => e.key === 'Enter' && handleSend()}
+          />
+          <Button
+            className=" bg-blue-500 text-white g hover:bg-blue-600"
+            onClick={handleSend}
+          >
+            Send
+          </Button><br /><br /> <br /><br />
+        </div>
+      </div>
+    </div>
     </div>
   );
 }
-
-export default Chat;

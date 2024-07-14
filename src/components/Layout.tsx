@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react';
+import React, { ReactNode, useEffect, useState } from 'react';
 import { PiLockKeyBold} from "react-icons/pi";
 import { IoSettingsOutline } from "react-icons/io5";
 import { Link } from "react-router-dom"
@@ -36,12 +36,45 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { Input } from "@/components/ui/input"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
+import { getApiKeyCount } from '@/acesse/apikey';
 interface LayoutProps {
   children: ReactNode;
 }
 
 // {children}
 const Layout: React.FC<LayoutProps> = ({ children }) => {
+  const [count, setCount] = useState<number>(0);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchApiKeyCount = async () => {
+      try {
+        const token = localStorage.getItem('token');
+        if (!token) {
+          setError('No token found');
+          setLoading(false);
+          return;
+        }
+        const apiKeyCount = await getApiKeyCount(token);
+        setCount(apiKeyCount);
+      } catch (err) {
+        setError('Failed to fetch API key count');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchApiKeyCount();
+  }, []);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>{error}</div>;
+  }
   return (
     <div className="grid min-h-screen w-full md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr]">
     <div className="hidden border-r bg-muted/40 md:block">
@@ -59,24 +92,24 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
         <div className="flex-1">
           <nav className="grid items-start px-2 text-sm font-medium lg:px-4">
             <Link
-              to="#"
+              to="/Playground"
               className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary"
             >
               <BiCodeBlock className="h-4 w-4"/ >
               Playground
             </Link>
             <Link
-              to="#"
+              to="/Playground/APIpage"
               className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary"
             >
               <PiLockKeyBold className="h-4 w-4"  />
               API keys
               <Badge className="ml-auto flex h-6 w-6 shrink-0 items-center justify-center rounded-full">
-                7
+              <p>{count}</p>
               </Badge>
             </Link>
             <Link
-              to="#"
+              to="/Playground/DocumentationPage"
               className="flex items-center gap-3 rounded-lg bg-muted px-3 py-2 text-primary transition-all hover:text-primary"
             >
               <FiBook className="h-4 w-4" />

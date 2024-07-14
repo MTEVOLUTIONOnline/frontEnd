@@ -7,6 +7,7 @@ import Cadastro from './pages/cadastro';
 // import { Setting } from './pages/setting';
 import { Home } from './pages/home';
 import Setting from './pages/setting';
+import { Chat } from "./pages/chat"
 
 
 const App: React.FC = () => {
@@ -19,6 +20,7 @@ const App: React.FC = () => {
         <Route path="/cadastro" element={<Cadastro />} />
         <Route path="/playground/*" element={<Playground />} />
         <Route path="/Setting/*" element={<Setting />} />
+        <Route path="/chat" element={<Chat />} />
       </Routes>
     </Router>
   );
