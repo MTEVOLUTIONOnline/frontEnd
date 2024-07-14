@@ -3,6 +3,7 @@ import Header from '@/components/HomeHeader';
 import Sidebar from '@/components/Sidebar';
 import { CarouselSpacing } from '@/components/HomeCarousel';
 import React from 'react';
+import UserDetailsCard from '@/acesse/UserDetailsCard';
 // import Header from './components/Header';
 // import Chat from './components/Chat';
 
@@ -14,6 +15,7 @@ const Home: React.FC = () => {
   return (
     <div className='flex justify-center h-[100vh]'>
       <CarouselSpacing />
+      <UserDetailsCard />
     </div>
   );
 }

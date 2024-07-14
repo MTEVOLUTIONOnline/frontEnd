@@ -36,28 +36,23 @@ export const LayoutSetting: React.FC<LayoutProps> = ({ children }) => {
             <span className="sr-only">Acme Inc</span>
           </Link>
           <Link
-            to="#"
+            to="/Playground"
             className="text-muted-foreground transition-colors hover:text-foreground"
           >
             Dashboard
           </Link>
           <Link
-            to="#"
+            to="/Playground/APIpage"
             className="text-muted-foreground transition-colors hover:text-foreground"
           >
-            Orders
+            API.key
           </Link>
+          
           <Link
-            to="#"
+            to="/Playground/DocumentationPag"
             className="text-muted-foreground transition-colors hover:text-foreground"
           >
-            Products
-          </Link>
-          <Link
-            to="#"
-            className="text-muted-foreground transition-colors hover:text-foreground"
-          >
-            Customers
+            Documentacao
           </Link>
           <Link
             to="#"
@@ -87,32 +82,24 @@ export const LayoutSetting: React.FC<LayoutProps> = ({ children }) => {
                 <span className="sr-only">Acme Inc</span>
               </Link>
               <Link
-                to="#"
+                to="/Playground"
                 className="text-muted-foreground hover:text-foreground"
               >
                 Dashboard
               </Link>
               <Link
-                to="#"
+                to="/Playground/APIpage"
                 className="text-muted-foreground hover:text-foreground"
               >
-                Orders
+                API key
               </Link>
               <Link
-                to="#"
+                to="/Playground/DocumentationPag"
                 className="text-muted-foreground hover:text-foreground"
               >
-                Products
+                Documentacao
               </Link>
-              <Link
-                to="#"
-                className="text-muted-foreground hover:text-foreground"
-              >
-                Customers
-              </Link>
-              <Link to="#" className="hover:text-foreground">
-                Settings
-              </Link>
+              
             </nav>
           </SheetContent>
         </Sheet>
@@ -153,11 +140,11 @@ export const LayoutSetting: React.FC<LayoutProps> = ({ children }) => {
           <nav
             className="grid gap-4 text-sm text-muted-foreground" x-chunk="dashboard-04-chunk-0"
           >
-            <Link to="#" className="font-semibold text-primary">
+            <Link to="/Setting" className="font-semibold text-primary">
               Profile
             </Link>
-            <Link to={currentUrl+"Security"}>Security</Link>
-            <Link to="#">Appearance</Link>
+            <Link to="/Setting/Security">Security</Link>
+            <Link to="/Setting/appearance">Appearance</Link>
             {/* <Link to="#">Support</Link>
             <Link to="#">Organizations</Link>
             <Link to="#">Advanced</Link> */}
