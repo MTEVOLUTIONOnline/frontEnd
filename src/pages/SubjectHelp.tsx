@@ -12,14 +12,14 @@ type Message = {
 };
 
 // Inicialização do Google Generative AI
-const genAI = new GoogleGenerativeAI("API_KEY");
+const genAI = new GoogleGenerativeAI("AIzaSyCHrg2zX-0AP6PvhZRVBjvRKEw3oFZHBFg");
 const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
 // Função auxiliar para formatar a resposta
 const formatAnswer = (answer: string) => {
   const lines = answer.split('\n');
   return lines.map((line, index) => {
-    if (line.match(/^\d+\./)) {
+    if (line.match(/^\d+./)) {
       return <p key={index} className="mb-2">{line}</p>;
     }
     if (line.startsWith('**') && line.endsWith('**')) {
@@ -66,7 +66,7 @@ const SubjectHelp = () => {
   };
 
   return (
-    <Card className="w-full max-w-4xl h-[700px] text-zinc-500 shadow-none border-none flex flex-col">
+    <Card className="w-full max-full h-[700px] text-zinc-500 shadow-none border-none flex flex-col ">
       <CardHeader>
         <h2 className="text-2xl font-bold">Auxílio em Matérias</h2>
       </CardHeader>

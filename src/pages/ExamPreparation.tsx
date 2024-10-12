@@ -155,24 +155,29 @@ const ExamPreparation: React.FC = () => {
             />
           </div>
         ) : (
-          <div className="space-y-5 w-[70%] text-zinc-200 "> 
+          <div className="space-y-5 w-[100%] text-zinc-200 overflow-x-auto h-[70vh]"> 
+          
             <img src={examImage} alt="Exame" className="max-w-full w-[150px] rounded-lg h-auto" />
             {!quizCompleted ? (
               questions[currentQuestion] && (
                 <div>
                   <h3 className="font-bold mb-2">Questão {currentQuestion + 1}</h3>
-                  <p>{questions[currentQuestion].question}</p>
+                  <p>
+                  Em Moçambique, a vegetação natural é constituída por diferentes tipos de formações resultando numa diversificação de paisagens. Faça corresponder cada tipo de clima (Coluna A) à respectiva vegetação (Coluna B).Em Moçambique, a vegetação natural é constituída por diferentes tipos de formações resultando numa diversificação de paisagens. Faça corresponder cada tipo de clima (Coluna A) à respectiva vegetação (Coluna B).Em Moçambique, a vegetação natural é constituída por diferentes tipos de formações resultando numa diversificação de paisagens. Faça corresponder cada tipo de clima (Coluna A) à respectiva vegetação (Coluna B).Em Moçambique, a vegetação natural é constituída por diferentes tipos de formações resultando numa diversificação de paisagens. Faça corresponder cada tipo de clima (Coluna A) à respectiva vegetação (Coluna B).Em Moçambique, a vegetação natural é constituída por diferentes tipos de formações resultando numa diversificação de paisagens. Faça corresponder cada tipo de clima (Coluna A) à respectiva vegetação (Coluna B).Em Moçambique, a vegetação natural é constituída por diferentes tipos de formações resultando numa diversificação de paisagens. Faça corresponder cada tipo de clima (Coluna A) à respectiva vegetação (Coluna B).
+                  Em Moçambique, a vegetação natural é constituída por diferentes tipos de formações resultando numa diversificação de paisagens. Faça corresponder cada tipo de clima (Coluna A) à respectiva vegetação (Coluna B).Em Moçambique, a vegetação natural é constituída por diferentes tipos de formações resultando numa diversificação de paisagens. Faça corresponder cada tipo de clima (Coluna A) à respectiva vegetação (Coluna B).Em Moçambique, a vegetação natural é constituída por diferentes tipos de formações resultando numa diversificação de paisagens. Faça corresponder cada tipo de clima (Coluna A) à respectiva vegetação (Coluna B).Em Moçambique, a vegetação natural é constituída por diferentes tipos de formações resultando numa diversificação de paisagens. Faça corresponder cada tipo de clima (Coluna A) à respectiva vegetação (Coluna B).Em Moçambique, a vegetação natural é constituída por diferentes tipos de formações resultando numa diversificação de paisagens. Faça corresponder cada tipo de clima (Coluna A) à respectiva vegetação (Coluna B).Em Moçambique, a vegetação natural é constituída por diferentes tipos de formações resultando numa diversificação de paisagens. Faça corresponder cada tipo de clima (Coluna A) à respectiva vegetação (Coluna B).
+                    {questions[currentQuestion].question}</p>
                   <RadioGroup
                     value={selectedAnswers[currentQuestion]}
                     onValueChange={handleAnswerSelect}
                     className="mt-2"
                   >
                     {questions[currentQuestion].options.map((option, index) => (
-                      <div key={index} className="flex items-center space-x-2">
-                        <RadioGroupItem value={index.toString()} id={`option-${index}`} />
+                      <div key={index} className="flex items-center space-x-2 space-y-5">
+                        <RadioGroupItem className='text-withe border-2xl' value={index.toString()} id={`option-${index}`} />
                         <Label htmlFor={`option-${index}`}>{option}</Label>
                       </div>
                     ))}
+                    
                   </RadioGroup>
                   <div className="mt-4 flex justify-between">
                     <Button onClick={handlePrevious} disabled={currentQuestion === 0}>

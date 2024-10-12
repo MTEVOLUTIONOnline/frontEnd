@@ -1,3 +1,4 @@
+import { MenuUL } from './Menuul';
 import { Button } from './ui/button';
 
 function MenuLeft() {
@@ -10,11 +11,7 @@ function MenuLeft() {
                 <h1 className='text-4xl font-bold text-gray-700 mb-10'>Explica Moçambique</h1>
                 <h3>Ola caro estudante. Estás a procura de exames nacionais para estudar? Estás na página certa! <u>Bons estudos.</u> </h3>
                 <Button className='mt-10'><a href="/About">Informacoes</a></Button>
-                <ul className='mt-5 grid gap-5'>
-                    <li className='border-gray-500 border hover:border-2 p-4 text-[20px] rounded-lg hover:border-green-500 cursor-pointer hover:bg-green-400/10'><a href="/ResolverExame">Resolver Exame</a></li>
-                    <li className='border-gray-500 border hover:border-2 p-4 text-[20px] rounded-lg hover:border-green-500 cursor-pointer hover:bg-green-400/10'><a href="/SubjectHelp">Ajuda do assunto</a></li>
-                    <li className='border-gray-500 border hover:border-2 p-4 text-[20px] rounded-lg hover:border-green-500 cursor-pointer hover:bg-green-400/10'><a href="/Cronograma">Cronograma</a></li>
-                </ul>
+                <MenuUL />
             </div>
         </div>
     );
