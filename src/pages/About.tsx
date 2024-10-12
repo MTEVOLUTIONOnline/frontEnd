@@ -1,4 +1,3 @@
-import React from 'react';
 import { User, Menu, Award, Lock } from 'lucide-react';
 
 const ExamesMocambiqueInterface = () => {

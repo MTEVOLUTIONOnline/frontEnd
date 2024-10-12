@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 const ExamCROLOGRAMA = () => {
   const [schedule, setSchedule] = useState([
@@ -31,7 +31,7 @@ const ExamCROLOGRAMA = () => {
     }
   };
 
-  const toggleMaterialCompletion = (id) => {
+  const toggleMaterialCompletion = (id: any) => {
     setMaterials(materials.map(material => 
       material.id === id ? { ...material, completed: !material.completed } : material
     ));

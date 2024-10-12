@@ -1,16 +1,22 @@
-import React, { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, FormEvent } from 'react';
 import { Card, CardHeader, CardContent, CardFooter } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
-// Initialize Google Generative AI
-const genAI = new GoogleGenerativeAI("AIzaSyDE5BaySsuQk4d7KjyII3XbwvGR1dym2XE");
+// Tipagem para as mensagens
+type Message = {
+  type: 'user' | 'bot';
+  content: string;
+};
+
+// Inicialização do Google Generative AI
+const genAI = new GoogleGenerativeAI("API_KEY");
 const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
-// Helper function to format the answer
-const formatAnswer = (answer) => {
+// Função auxiliar para formatar a resposta
+const formatAnswer = (answer: string) => {
   const lines = answer.split('\n');
   return lines.map((line, index) => {
     if (line.match(/^\d+\./)) {
@@ -24,11 +30,11 @@ const formatAnswer = (answer) => {
 };
 
 const SubjectHelp = () => {
-  const [subject, setSubject] = useState('');
-  const [messages, setMessages] = useState([]);
-  const [inputMessage, setInputMessage] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
-  const messagesEndRef = useRef(null);
+  const [subject, setSubject] = useState<string>('');
+  const [messages, setMessages] = useState<Message[]>([]);
+  const [inputMessage, setInputMessage] = useState<string>('');
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const messagesEndRef = useRef<HTMLDivElement | null>(null);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -36,23 +42,23 @@ const SubjectHelp = () => {
 
   useEffect(scrollToBottom, [messages]);
 
-  const handleSubmit = async (e: any) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     if (!inputMessage.trim() || !subject) return;
 
     setIsLoading(true);
-    const userMessage = { type: 'user', content: inputMessage };
+    const userMessage: Message = { type: 'user', content: inputMessage };
     setMessages(prev => [...prev, userMessage]);
     setInputMessage('');
 
     try {
       const prompt = `Responda à seguinte pergunta de ${subject}: ${inputMessage}. Por favor, organize a resposta em passos numerados e use marcações Markdown para destacar títulos e informações importantes.`;
       const result = await model.generateContent(prompt);
-      const botMessage = { type: 'bot', content: result.response.text() };
+      const botMessage: Message = { type: 'bot', content: result.response.text() };
       setMessages(prev => [...prev, botMessage]);
     } catch (error) {
       console.error('Erro ao gerar resposta:', error);
-      const errorMessage = { type: 'bot', content: 'Desculpe, ocorreu um erro ao processar sua pergunta. Por favor, tente novamente.' };
+      const errorMessage: Message = { type: 'bot', content: 'Desculpe, ocorreu um erro ao processar sua pergunta. Por favor, tente novamente.' };
       setMessages(prev => [...prev, errorMessage]);
     } finally {
       setIsLoading(false);
@@ -60,7 +66,7 @@ const SubjectHelp = () => {
   };
 
   return (
-    <Card className="w-full max-w-4xl  h-[700px] text-zinc-500 shadow-none border-none flex flex-col bg-zinc-5000">
+    <Card className="w-full max-w-4xl h-[700px] text-zinc-500 shadow-none border-none flex flex-col">
       <CardHeader>
         <h2 className="text-2xl font-bold">Auxílio em Matérias</h2>
       </CardHeader>
