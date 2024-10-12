@@ -1,28 +1,30 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-// import { Casa } from './pages/home';
-import Login from './pages/login';
-import Playground from './pages/Playground';
-import Cadastro from './pages/cadastro';
-// import { Setting } from './pages/setting';
-import { Home } from './pages/home';
-import Setting from './pages/setting';
-import { Chat } from "./pages/chat"
+import { Layout } from './components/layout/layout';
+import HomePage from './pages/HomePage';
+import ExamPreparation from './pages/ExamPreparation';
+import SubjectHelp from './pages/SubjectHelp';
+import ExamCROLOGRAMA from './pages/exameCrologram';
+import ExamesMocambiqueInterface from './pages/About';
 
+// ExamCROLOGRAMA ExamPreparation SubjectHelp ExamCROLOGRAMA ExamesMocambiqueInterface
 
-const App: React.FC = () => {
+function App() {
   return (
-    <Router>
-      <Routes>
-        {/* Dashboard */}
-        <Route path="/" element={<Home />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/cadastro" element={<Cadastro />} />
-        <Route path="/playground/*" element={<Playground />} />
-        <Route path="/Setting/*" element={<Setting />} />
-        <Route path="/chat" element={<Chat />} />
-      </Routes>
-    </Router>
+      <Router>
+          <Layout>
+              <Routes>
+                  <Route path="/" element={<HomePage />} />
+                  <Route path="/ResolverExame" element={<ExamPreparation />} />
+                  <Route path="/SubjectHelp" element={<SubjectHelp />} />
+                  <Route path="/Cronograma" element={<ExamCROLOGRAMA />} />
+              </Routes>
+          </Layout>
+        <Routes>
+        <Route path="/About" element={<ExamesMocambiqueInterface />} />
+  
+        </Routes>
+      </Router>
   );
 }
 
